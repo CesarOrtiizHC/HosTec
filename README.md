@@ -1,106 +1,42 @@
-# 🖥️ HosTec - Tienda de Accesorios para Computadoras
+# 🖥️ HosTec - Tienda en Línea
 
-HosTec es un proyecto web de comercio electrónico desarrollado en **React + Vite (Frontend)** y **Node.js + Express (Backend)**, con **Supabase** como base de datos y autenticación.  
-
----
-
-## 🚀 Tecnologías utilizadas
-- **Frontend**
-  - React + Vite
-  - TypeScript
-  - React Router
-  - CSS personalizado
-- **Backend**
-  - Node.js
-  - Express
-  - Supabase SDK
-- **Base de Datos**
-  - Supabase (PostgreSQL)
+Proyecto desarrollado con **React + Vite** en el frontend y **Supabase** como backend (base de datos, autenticación y almacenamiento).  
+El sistema permite gestionar productos, usuarios, carritos de compra y pagos.
 
 ---
 
-📌 Funcionalidades
+## Estructura de Carpetas
 
-🔐 Autenticación: Login con correo/contraseña desde tabla usuarios.
-
-🛒 Carrito de compras: Agregar, eliminar y pagar productos.
-
-📦 Gestión de productos: Listado dinámico desde Supabase.
-
-💳 Pagos: Integración con PayPal (opcional).
-
-📧 EmailJS: Envío de correos desde formularios (opcional).
-
-
-
----
-
-📡 Endpoints del Backend
-
-🔐 Autenticación (/api/auth)
-
-POST /api/auth/register → Registrar usuario.
-
-{
-  "nombre": "Juan",
-  "correo": "juan@example.com",
-  "contraseña": "123456"
-}
-
-POST /api/auth/login → Iniciar sesión.
-
-{
-  "correo": "juan@example.com",
-  "contraseña": "123456"
-}
-
-
-
----
-
-📦 Productos (/api/products)
-
-GET /api/products → Listar todos los productos.
-
-GET /api/products/:id → Obtener un producto por ID.
-
-POST /api/products → Agregar producto (solo admin).
-
-{
-  "name": "Teclado Mecánico",
-  "price": 899,
-  "stock": 20,
-  "image_url": "https://misimagenes.com/teclado.jpg"
-}
-
-
-
----
-
-🛒 Carrito (/api/cart)
-
-GET /api/cart/:user_id → Obtener carrito de un usuario.
-
-POST /api/cart → Agregar producto al carrito.
-
-{
-  "user_id": "98bd9e6b-2b86-4fb0-85e6-d5e191e9fcbc",
-  "product_id": 2,
-  "cantidad": 1
-}
-
-DELETE /api/cart/:id → Eliminar un producto del carrito.
-
-
-
----
-
-🔮 Mejoras futuras
-
-Autenticación con Google y Facebook.
-
-Implementar facturación automática.
-
-Dashboard para administrador.
-
-Integración con API de envíos (DHL o FedEx).
+```bash
+hos-tec/
+│
+├── public/                # Archivos estáticos (imágenes, favicon, etc.)
+│
+├── src/                   # Código fuente principal
+│   ├── components/        # Componentes reutilizables
+│   │   ├── Header.tsx     # Encabezado con login/logout
+│   │   ├── Footer.tsx     # Pie de página
+│   │   └── AuthContext.tsx # Manejo global de la sesión de usuario
+│   │
+│   ├── pages/             # Páginas del sistema
+│   │   ├── Home.tsx       # Página principal con productos
+│   │   ├── Productos.tsx  # Catálogo de productos
+│   │   ├── Carrito.tsx    # Carrito de compras + pago con PayPal
+│   │   ├── Login.tsx      # Inicio de sesión (correo/contraseña y OAuth)
+│   │   ├── Registro.tsx   # Registro de nuevos usuarios
+│   │   └── AdminFactura.tsx # Panel de facturación
+│   │
+│   ├── styles/            # Estilos CSS por página o componente
+│   │   ├── Home.css
+│   │   ├── Productos.css
+│   │   ├── Carrito.css
+│   │   ├── login.css
+│   │   └── AdminFactura.css
+│   │
+│   ├── supabaseClient.ts  # Configuración de conexión con Supabase
+│   ├── main.tsx           # Punto de entrada de la app React
+│   └── App.tsx            # Configuración de rutas
+│
+├── package.json           # Dependencias y scripts
+├── tsconfig.json          # Configuración de TypeScript
+└── vite.config.ts         # Configuración de Vite
