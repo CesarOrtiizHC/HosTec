@@ -1,0 +1,116 @@
+-- ================================
+-- TABLA: USUARIOS
+-- ================================
+create table if not exists public.usuarios (
+  id uuid primary key default gen_random_uuid(),
+  nombre text not null,
+  apellido text not null,
+  pais text not null,
+  estado text not null,
+  direccion text not null,
+  edad integer not null,
+  correo text not null unique,
+  contraseña text not null
+);
+
+-- Insertar usuario
+insert into usuarios (nombre, apellido, pais, estado, direccion, edad, correo, contraseña)
+values ('Juan', 'Pérez', 'México', 'CDMX', 'Av. Reforma 123', 25, 'juan@example.com', '123456');
+
+-- Consultar todos
+select * from usuarios;
+
+-- Consultar por correo
+select * from usuarios where correo = 'juan@example.com';
+
+-- Actualizar nombre
+update usuarios set nombre = 'Carlos' where correo = 'juan@example.com';
+
+-- Eliminar usuario
+delete from usuarios where correo = 'juan@example.com';
+
+
+
+-- ================================
+-- TABLA: PRODUCTS
+-- ================================
+create table if not exists public.products (
+  id serial primary key,
+  name text not null,
+  price numeric(10,2) not null,
+  stock integer not null,
+  image_url text
+);
+
+-- Insertar producto
+insert into products (name, price, stock, image_url)
+values ('Teclado Mecánico', 899, 20, 'https://misimagenes.com/teclado.jpg');
+
+-- Consultar todos
+select * from products;
+
+-- Consultar un producto
+select * from products where id = 1;
+
+-- Actualizar stock
+update products set stock = stock - 1 where id = 1;
+
+-- Eliminar producto
+delete from products where id = 1;
+
+
+
+-- ================================
+-- TABLA: CART_ITEMS
+-- ================================
+create table if not exists public.cart_items (
+  id serial primary key,
+  user_id uuid references public.usuarios(id) on delete cascade,
+  product_id integer references public.products(id) on delete cascade,
+  nombrep text not null,
+  precio numeric(10,2) not null,
+  cantidad integer not null
+);
+
+-- Insertar item en carrito
+insert into cart_items (user_id, product_id, nombrep, precio, cantidad)
+values ('00000000-0000-0000-0000-000000000000', 1, 'Teclado Mecánico', 899, 2);
+
+-- Consultar carrito de un usuario
+select * from cart_items where user_id = '00000000-0000-0000-0000-000000000000';
+
+-- Actualizar cantidad
+update cart_items set cantidad = 3 where id = 1;
+
+-- Eliminar un item
+delete from cart_items where id = 1;
+
+
+
+-- ================================
+-- TABLA: PAGOS
+-- ================================
+create table if not exists public.pagos (
+  id serial primary key,
+  user_id uuid references public.usuarios(id) on delete cascade,
+  nombre_titular text not null,
+  direccion_envio text not null,
+  tarjeta_numero text not null,
+  expiracion_mes int not null,
+  expiracion_anio int not null,
+  cvv text not null,
+  fecha timestamp default now()
+);
+
+-- Insertar pago
+insert into pagos (user_id, nombre_titular, direccion_envio, tarjeta_numero, expiracion_mes, expiracion_anio, cvv)
+values ('00000000-0000-0000-0000-000000000000', 'Juan Pérez', 'Av. Reforma 123', '1234567812345678', 12, 2025, '123');
+
+-- Consultar todos los pagos
+select * from pagos;
+
+-- Consultar pagos de un usuario
+select * from pagos where user_id = '00000000-0000-0000-0000-000000000000';
+
+-- Eliminar pago
+delete from pagos where id = 1;
