@@ -1,0 +1,40 @@
+import { Routes, Route, Navigate } from 'react-router-dom';
+import { AuthProvider } from './components/AuthContext';
+
+import Home from './pages/Home';
+import Registro from './pages/Registro';
+import Login from './pages/Login';
+
+import Productos from './pages/Productos';
+import Carrito from './pages/Carrito';
+import AdminProducts from './pages/AdminProducts';
+import AdminLogin from './pages/AdminLogin';
+import Menu from './pages/Menu';
+import Usuarios from './pages/AdminUsers';
+import Facturas from './pages/AdminFactura';
+import Admin from './pages/UsersAdm';
+import Contacto from './pages/Contacto';
+
+const App: React.FC = () => {
+  return (
+    <AuthProvider>
+      <Routes>
+        <Route path="/" element={<Navigate to="/home" />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/registro" element={<Registro />} />
+        <Route path="/home" element={<Home />} />
+        <Route path="/productos" element={<Productos />} />
+        <Route path="/carrito" element={<Carrito />} />
+        <Route path="/AdmP" element={<AdminProducts />} />
+        <Route path="/adm" element={<AdminLogin />} />
+        <Route path="/menu" element={<Menu />} />
+        <Route path="/usuarios" element={<Usuarios />} />
+        <Route path="/factura" element={<Facturas />} />
+        <Route path="/administradores" element={<Admin />} />
+        <Route path="/Contacto" element={<Contacto />} />
+      </Routes>
+    </AuthProvider>
+  );
+};
+
+export default App;
